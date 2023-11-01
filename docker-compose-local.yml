@@ -10,19 +10,19 @@ networks:
 volumes:
   dbdata:
     driver: local
-  auth-api-data:
-    name: auth-api-data
+  api_gateway-api-data:
+    name: api_gateway-api-data
 
   # Workflow
 services:
-  auth_api:
+  api_gateway:
     build:
       context: .
       dockerfile: ./Dockerfile
-    container_name: auth_api
+    container_name: api_gateway
     ports:
-      - 8081:80
+      - 8085:80
     volumes:
-      - auth-api-data:/var/www/html
+      - api_gateway-api-data:/var/www/html
     networks:
       - csproject
