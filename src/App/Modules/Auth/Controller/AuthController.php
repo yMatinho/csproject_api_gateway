@@ -32,11 +32,4 @@ class AuthController extends Controller
         
         return $this->authService->login($dto->getLogin(), $dto->getPassword())->toArray();
     }
-
-    public function validate(Request $request)
-    {
-        $dto = ValidateRequest::fromRequest($request);
-        
-        return $this->authService->validate($dto->getAccessToken())->toArray();
-    }
 }

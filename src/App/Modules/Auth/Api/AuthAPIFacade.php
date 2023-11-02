@@ -18,17 +18,17 @@ class AuthAPIFacade
 
     public function login(string $login, string $password): LoginResponse
     {
-        $response = $this->httpRequestFacade->request(HttpMethods::POST, USER_SERVICE_URL . "auth/login", [
+        $response = $this->httpRequestFacade->request(HttpMethods::POST, AUTH_SERVICE_URL . "auth/login", [
             "login" => $login,
             "password" => $password
         ]);
-
+        
         return LoginResponse::fromData($response);
     }
 
     public function validate(string $accessToken): ValidateResponse
     {
-        $response = $this->httpRequestFacade->request(HttpMethods::POST, USER_SERVICE_URL . "auth/validate", [
+        $response = $this->httpRequestFacade->request(HttpMethods::POST, AUTH_SERVICE_URL . "auth/validate", [
             "accessToken"=>$accessToken
         ]);
 
