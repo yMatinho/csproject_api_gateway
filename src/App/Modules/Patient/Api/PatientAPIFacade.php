@@ -8,6 +8,7 @@ use App\Modules\Auth\DTO\Response\ValidateResponse;
 use App\Modules\Patient\DTO\Request\PatientCreationRequest;
 use App\Modules\Patient\DTO\Response\PatientCreationResponse;
 use App\Modules\Patient\DTO\Response\PatientFindAllResponse;
+use App\Modules\Patient\DTO\Response\PatientFindResponse;
 use Framework\Http\HttpRequestFacade;
 use Framework\Singleton\Router\HttpMethods;
 
@@ -35,5 +36,14 @@ class PatientAPIFacade
         $response = $this->httpRequestFacade->request(HttpMethods::GET, PATIENT_SERVICE_URL . "patient/findAll");
 
         return PatientFindAllResponse::fromData($response);
+    }
+
+    public function find(string $id): PatientFindResponse
+    {
+        $response = $this->httpRequestFacade->request(HttpMethods::GET, PATIENT_SERVICE_URL . "patient", [
+            "id"=>$id
+        ]);
+
+        return PatientFindResponse::fromData($response);
     }
 }

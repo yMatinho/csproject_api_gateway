@@ -33,6 +33,11 @@ class PatientController extends Controller
         return $this->patientService->findAll()->toArray();
     }
 
+    public function find(Request $request)
+    {
+        return $this->patientService->find($request->id)->toArray();
+    }
+
     public function create(Request $request)
     {
         $dto = PatientCreationRequest::fromRequest($request);

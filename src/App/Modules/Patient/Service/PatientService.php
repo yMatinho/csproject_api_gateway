@@ -12,6 +12,7 @@ use App\Modules\Auth\DTO\Response\ValidateResponse;
 use App\Modules\Patient\DTO\Request\PatientCreationRequest;
 use App\Modules\Patient\DTO\Response\PatientCreationResponse;
 use App\Modules\Patient\DTO\Response\PatientFindAllResponse;
+use App\Modules\Patient\DTO\Response\PatientFindResponse;
 use App\Modules\User\UserAPIFacade;
 use Framework\Exception\HttpException;
 use Framework\Singleton\Router\HttpDefaultCodes;
@@ -32,5 +33,10 @@ class PatientService
     public function findAll(): PatientFindAllResponse
     {
         return $this->patientAPIFacade->findAll();
+    }
+
+    public function find(string $id): PatientFindResponse
+    {
+        return $this->patientAPIFacade->find($id);
     }
 }
