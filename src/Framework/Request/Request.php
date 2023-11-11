@@ -4,10 +4,11 @@ namespace Framework\Request;
 
 abstract class Request {
     
+    protected array $headers;
     public function __construct(
         protected array $values
     ) {
-
+        $this->headers = getallheaders();
     }
 
     public function __get(string $name) {
@@ -16,5 +17,13 @@ abstract class Request {
 
     public function getValues(): array {
         return $this->values;
+    }
+
+    public function header(string $name): mixed {
+        return $this->headers[$name];
+    }
+
+    public function hasHeader(string $name): bool {
+        return isset($this->headers[$name]);
     }
 }
