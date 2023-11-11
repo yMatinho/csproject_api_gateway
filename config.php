@@ -5,6 +5,7 @@ require("vendor/autoload.php");
 define("MAIN_DIR", __DIR__.'/');
 define("SITE_URL", "http://localhost:8085/");
 define("USER_SERVICE_URL", "http://users_api/");
+define("PATIENT_SERVICE_URL", "http://patients_api/");
 define("AUTH_SERVICE_URL", "http://auth_api/");
 
 define("DB_DATABASE", "");
