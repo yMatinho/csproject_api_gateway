@@ -53,7 +53,7 @@ class PatientFindResponse
         return $this->patient->getCreatedAt();
     }
 
-    public function getUpdatedAt(): string {
+    public function getUpdatedAt(): ?string {
         return $this->patient->getUpdatedAt();
     }
 

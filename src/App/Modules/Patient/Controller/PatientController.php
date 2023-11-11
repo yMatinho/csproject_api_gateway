@@ -10,6 +10,8 @@ use App\Modules\Auth\Resource\TokenResource;
 use App\Modules\Auth\Resource\ValidationResource;
 use App\Modules\Auth\Service\AuthService;
 use App\Modules\Patient\DTO\Request\PatientCreationRequest;
+use App\Modules\Patient\DTO\Request\PatientDeleteRequest;
+use App\Modules\Patient\DTO\Request\PatientFindRequest;
 use App\Modules\Patient\DTO\Request\PatientUpdateRequest;
 use App\Modules\Patient\Service\PatientService;
 use App\Modules\User\UserAPIFacade;
@@ -36,7 +38,7 @@ class PatientController extends Controller
 
     public function find(Request $request)
     {
-        return $this->patientService->find($request->id)->toArray();
+        return $this->patientService->find(PatientFindRequest::fromRequest($request)->getId())->toArray();
     }
 
     public function create(Request $request)
@@ -51,6 +53,6 @@ class PatientController extends Controller
 
     public function delete(Request $request)
     {        
-        return $this->patientService->delete($request->id)->toArray();
+        return $this->patientService->delete(PatientDeleteRequest::fromRequest($request)->getId())->toArray();
     }
 }
