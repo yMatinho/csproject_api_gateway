@@ -10,6 +10,7 @@ use App\Modules\Auth\Resource\TokenResource;
 use App\Modules\Auth\Resource\ValidationResource;
 use App\Modules\Auth\Service\AuthService;
 use App\Modules\Patient\DTO\Request\PatientCreationRequest;
+use App\Modules\Patient\DTO\Request\PatientUpdateRequest;
 use App\Modules\Patient\Service\PatientService;
 use App\Modules\User\UserAPIFacade;
 use Framework\Controller\Controller;
@@ -39,9 +40,12 @@ class PatientController extends Controller
     }
 
     public function create(Request $request)
-    {
-        $dto = PatientCreationRequest::fromRequest($request);
-        
-        return $this->patientService->create($dto)->toArray();
+    {        
+        return $this->patientService->create(PatientCreationRequest::fromRequest($request))->toArray();
+    }
+
+    public function update(Request $request)
+    {        
+        return $this->patientService->update(PatientUpdateRequest::fromRequest($request))->toArray();
     }
 }

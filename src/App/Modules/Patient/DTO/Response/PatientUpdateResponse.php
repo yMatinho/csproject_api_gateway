@@ -5,7 +5,7 @@ namespace App\Modules\Patient\DTO\Response;
 use App\Modules\Patient\DTO\Patient;
 use Framework\Request\Request;
 
-class PatientCreationResponse
+class PatientUpdateResponse
 {
 
     public function __construct(
@@ -13,9 +13,9 @@ class PatientCreationResponse
     ) {
     }
 
-    public static function fromData(object $data): PatientCreationResponse
+    public static function fromData(object $data): PatientUpdateResponse
     {
-        return new PatientCreationResponse(
+        return new PatientUpdateResponse(
             Patient::fromData($data->patient)
         );
     }
@@ -25,7 +25,7 @@ class PatientCreationResponse
         return $this->patient;
     }
 
-    public function getId(): ?int {
+    public function getId(): int {
         return $this->patient->getId();
     }
 
@@ -49,7 +49,7 @@ class PatientCreationResponse
         return $this->patient->getWeight();
     }
 
-    public function getCreatedAt(): ?string {
+    public function getCreatedAt(): string {
         return $this->patient->getCreatedAt();
     }
 
