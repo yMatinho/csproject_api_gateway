@@ -12,6 +12,8 @@ volumes:
     driver: local
   api_gateway-api-data:
     name: api_gateway-api-data
+  redis:
+    driver: local
 
   # Workflow
 services:
@@ -26,3 +28,14 @@ services:
       - api_gateway-api-data:/var/www/html
     networks:
       - csproject
+  api_gateway_cache:
+    image: redis
+    container_name: api_gateway_cache
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - '6379:6379'
+    networks:
+      - csproject
+    volumes:
+      - redis:/data
