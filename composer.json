@@ -4,6 +4,7 @@
         "mockery/mockery": "^1.6"
     },
     "require": {
-        "lcobucci/jwt": "^4.0"
+        "lcobucci/jwt": "^4.0",
+        "predis/predis": "^2.2"
     }
 }
