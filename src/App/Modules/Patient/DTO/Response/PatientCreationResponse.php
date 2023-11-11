@@ -2,14 +2,13 @@
 
 namespace App\Modules\Patient\DTO\Response;
 
-use App\Modules\Patient\DTO\Request\Patient;
+use App\Modules\Patient\DTO\Patient;
 use Framework\Request\Request;
 
 class PatientCreationResponse
 {
 
     public function __construct(
-        private string $statusCode,
         private Patient $patient
     ) {
     }
@@ -17,7 +16,6 @@ class PatientCreationResponse
     public static function fromData(object $data): PatientCreationResponse
     {
         return new PatientCreationResponse(
-            $data->statusCode,
             Patient::fromData($data)
         );
     }

@@ -2,6 +2,7 @@
 
 namespace App\Modules\Patient\DTO\Request;
 
+use App\Modules\Patient\DTO\Patient;
 use Framework\Request\Request;
 
 class PatientCreationRequest

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Patient\DTO\Request;
+namespace App\Modules\Patient\DTO;
 
 use Framework\Request\Request;
 
@@ -8,21 +8,25 @@ class Patient
 {
 
     public function __construct(
+        private ?int $id,
         private string $name,
         private int $age,
         private int $height,
         private float $weight,
-        private ?int $id,
+        private ?string $createdAt=null,
+        private ?string $updatedAt=null,
     ) {
     }
 
     public static function fromData(object $data) {
         return new Patient(
+            $data->id,
             $data->name,
             $data->age,
             $data->height,
             $data->weight,
-            $data->id,
+            $data->createdAt,
+            $data->updatedAt,
         );
     }
 
@@ -54,5 +58,25 @@ class Patient
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getCreatedAt(): ?string {
+        return $this->createdAt;
+    }
+
+    public function getUpdatedAt(): ?string {
+        return $this->updatedAt;
+    }
+
+    public function toArray(): array {
+        return [
+            "id"=> $this->id,
+            "name"=> $this->name,
+            "age"=> $this->age,
+            "height"=> $this->height,
+            "weight"=> $this->weight,
+            "createdAt"=>$this->createdAt,
+            "updatedAt"=>$this->updatedAt
+        ];
     }
 }
