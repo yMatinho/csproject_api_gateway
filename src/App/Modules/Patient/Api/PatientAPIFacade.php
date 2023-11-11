@@ -8,6 +8,7 @@ use App\Modules\Auth\DTO\Response\ValidateResponse;
 use App\Modules\Patient\DTO\Request\PatientCreationRequest;
 use App\Modules\Patient\DTO\Request\PatientUpdateRequest;
 use App\Modules\Patient\DTO\Response\PatientCreationResponse;
+use App\Modules\Patient\DTO\Response\PatientDeleteResponse;
 use App\Modules\Patient\DTO\Response\PatientFindAllResponse;
 use App\Modules\Patient\DTO\Response\PatientFindResponse;
 use App\Modules\Patient\DTO\Response\PatientUpdateResponse;
@@ -64,5 +65,14 @@ class PatientAPIFacade
         ]);
 
         return PatientFindResponse::fromData($response);
+    }
+
+    public function delete(string $id): PatientDeleteResponse
+    {
+        $response = $this->httpRequestFacade->request(HttpMethods::DELETE, PATIENT_SERVICE_URL . "patient", [
+            "id" => $id
+        ]);
+
+        return PatientDeleteResponse::fromData($response);
     }
 }

@@ -48,4 +48,9 @@ class PatientController extends Controller
     {        
         return $this->patientService->update(PatientUpdateRequest::fromRequest($request))->toArray();
     }
+
+    public function delete(Request $request)
+    {        
+        return $this->patientService->delete($request->id)->toArray();
+    }
 }

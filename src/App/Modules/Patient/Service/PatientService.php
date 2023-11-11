@@ -12,6 +12,7 @@ use App\Modules\Auth\DTO\Response\ValidateResponse;
 use App\Modules\Patient\DTO\Request\PatientCreationRequest;
 use App\Modules\Patient\DTO\Request\PatientUpdateRequest;
 use App\Modules\Patient\DTO\Response\PatientCreationResponse;
+use App\Modules\Patient\DTO\Response\PatientDeleteResponse;
 use App\Modules\Patient\DTO\Response\PatientFindAllResponse;
 use App\Modules\Patient\DTO\Response\PatientFindResponse;
 use App\Modules\Patient\DTO\Response\PatientUpdateResponse;
@@ -45,5 +46,10 @@ class PatientService
     public function update(PatientUpdateRequest $request): PatientUpdateResponse
     {
         return $this->patientAPIFacade->update($request);
+    }
+
+    public function delete(string $id): PatientDeleteResponse
+    {
+        return $this->patientAPIFacade->delete($id);
     }
 }
