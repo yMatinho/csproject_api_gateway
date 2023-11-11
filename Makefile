@@ -21,20 +21,20 @@ help:
 	} { lastLine = $$0 }' $(MAKEFILE_LIST)
 
 clean:
-	docker-compose -p csproject_auth down --rmi local --volumes
+	docker-compose -p csproject_api_gateway down --rmi local --volumes
 
 check_network:
 	- docker network create --driver bridge $(NETWORK_NAME)
 
 setup-dev: check_network
-	docker-compose -p csproject_auth down --rmi local --volumes
-	docker-compose -f docker-compose-dev.yml -p csproject_auth up -d --build
-	docker exec -it auth_api composer install
+	docker-compose -p csproject_api_gateway down --rmi local --volumes
+	docker-compose -f docker-compose-dev.yml -p csproject_api_gateway up -d --build
+	docker exec -it api_gateway composer install
 
 setup-local: check_network
-	docker-compose -p csproject_auth down --rmi local --volumes
-	docker-compose -f docker-compose-local.yml -p csproject_auth up -d --build
-	docker exec -it auth_api composer install
+	docker-compose -p csproject_api_gateway down --rmi local --volumes
+	docker-compose -f docker-compose-local.yml -p csproject_api_gateway up -d --build
+	docker exec -it api_gateway composer install
 
 unit-test-local:
 	php ./vendor/bin/phpunit --testsuit Unit
