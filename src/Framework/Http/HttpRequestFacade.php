@@ -19,6 +19,7 @@ class HttpRequestFacade {
         
         if ($statusCode != HttpDefaultCodes::SUCCESS || $response == null)
             throw new \Exception(isset($response->message) ? $response->message : $response);
+        $response->statusCode = $statusCode;
 
         return $response;
     }
