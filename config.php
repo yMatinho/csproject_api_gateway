@@ -14,6 +14,9 @@ define("DB_PASSWORD", "");
 define("DB_PORT", null);
 define("DB_HOST", "");
 
+define("REDIS_HOST", "api_gateway_cache");
+define("REDIS_PORT", 6379);
+
 spl_autoload_register(function($class) {
     $class = str_replace("\\","/", $class);
     if(!file_exists(MAIN_DIR.'src/' . $class . '.php'))
