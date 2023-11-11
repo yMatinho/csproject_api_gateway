@@ -12,9 +12,9 @@ class FindByCredentialsResponse
     ) {
     }
 
-    public static function fromJson(object $data): FindByCredentialsResponse
+    public static function fromData(object $data): FindByCredentialsResponse
     {
-        return new FindByCredentialsResponse($data->status, User::fromJson($data->user));
+        return new FindByCredentialsResponse($data->status, User::fromData($data->user));
     }
 
     public function getStatus(): bool

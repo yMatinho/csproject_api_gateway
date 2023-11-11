@@ -25,12 +25,7 @@ class PatientAPIFacade
 
     public function create(PatientCreationRequest $request): PatientCreationResponse
     {
-        $response = $this->httpRequestFacade->request(HttpMethods::POST, PATIENT_SERVICE_URL . "patient", [
-            "age" => $request->getAge(),
-            "height" => $request->getHeight(),
-            "weight" => $request->getWeight(),
-            "name" => $request->getName(),
-        ]);
+        $response = $this->httpRequestFacade->request(HttpMethods::POST, PATIENT_SERVICE_URL . "patient", $request->toRequest());
 
         return PatientCreationResponse::fromData($response);
     }
@@ -41,12 +36,7 @@ class PatientAPIFacade
             "%s/patient?id=%d",
             PATIENT_SERVICE_URL,
             $request->getId()
-        ), [
-            "age" => $request->getAge(),
-            "height" => $request->getHeight(),
-            "weight" => $request->getWeight(),
-            "name" => $request->getName(),
-        ]);
+        ), $request->toRequest());
 
         return PatientUpdateResponse::fromData($response);
     }

@@ -9,39 +9,58 @@ class PatientUpdateRequest
 {
 
     public function __construct(
-        private Patient $patient
+        private int $id,
+        private ?string $name,
+        private ?int $age,
+        private ?int $height,
+        private ?float $weight,
     ) {
     }
 
     public static function fromRequest(Request $data): PatientUpdateRequest
     {
         return new PatientUpdateRequest(
-            Patient::fromRequest($data)
+            $data->id,
+            $data->name,
+            $data->age,
+            $data->height,
+            $data->weight
         );
     }
 
     public function getId(): int
     {
-        return $this->patient->getId();
+        return $this->id;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
-        return $this->patient->getName();
+        return $this->name;
     }
     
-    public function getAge(): int
+    public function getAge(): ?int
     {
-        return $this->patient->getAge();
+        return $this->age;
     }
 
-    public function getHeight(): int
+    public function getHeight(): ?int
     {
-        return $this->patient->getHeight();
+        return $this->height;
     }
 
-    public function getWeight(): float
+    public function getWeight(): ?float
     {
-        return $this->patient->getWeight();
+        return $this->weight;
+    }
+
+    public function toRequest(): array {
+        return array_filter([
+            "name"=> $this->name,
+            "age"=> $this->age,
+            "height"=> $this->height,
+            "weight"=> $this->weight
+        ], function($bodyItem) {
+            return $bodyItem !== null;
+        });
     }
 }
