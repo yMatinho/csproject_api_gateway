@@ -56,11 +56,12 @@ class ApiExecutionCommand extends ExecutionCommand
             $result = $controller->$methodName($request);
 
             echo is_array($result) ? json_encode($result) : $result;
-        } catch (Exception $e) {
-            header(HttpDefaultHeaders::getHeader(HttpDefaultCodes::BAD_REQUEST));
-            echo $this->treatedError($e, $controller);
         } catch(HttpException $e) {
             header(HttpDefaultHeaders::getHeader($e->getCode()));
+            echo $this->treatedError($e, $controller);
+        }
+        catch (Exception $e) {
+            header(HttpDefaultHeaders::getHeader(HttpDefaultCodes::BAD_REQUEST));
             echo $this->treatedError($e, $controller);
         }
     }

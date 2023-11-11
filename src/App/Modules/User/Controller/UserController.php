@@ -4,6 +4,7 @@ namespace App\Modules\User\Controller;
 
 use App\Core\ErrorHandler\JsonHandler;
 use App\Core\JWT\JWTFactory;
+use App\Core\Middlewares\AuthMiddleware;
 use App\Modules\Auth\DTO\Request\LoginRequest;
 use App\Modules\Auth\DTO\Request\ValidateRequest;
 use App\Modules\Auth\Resource\TokenResource;
@@ -24,20 +25,26 @@ use Framework\Singleton\Router\HttpDefaultCodes;
 class UserController extends Controller
 {
     private UserService $userService;
+    private AuthMiddleware $authMiddleware;
 
     public function __construct()
     {
         $this->errorHandler = new JsonHandler();
         $this->userService = new UserService();
+        $this->authMiddleware = new AuthMiddleware();
     }
 
-    public function findAll()
+    public function findAll(Request $request)
     {
+        $this->authMiddleware->handle($request);
+
         return $this->userService->findAll()->toArray();
     }
 
     public function find(Request $request)
     {
+        $this->authMiddleware->handle($request);
+
         return $this->userService->find(UserFindRequest::fromRequest($request)->getId())->toArray();
     }
 
@@ -48,11 +55,15 @@ class UserController extends Controller
 
     public function update(Request $request)
     {        
+        $this->authMiddleware->handle($request);
+
         return $this->userService->update(UserUpdateRequest::fromRequest($request))->toArray();
     }
 
     public function delete(Request $request)
     {        
+        $this->authMiddleware->handle($request);
+        
         return $this->userService->delete(UserDeleteRequest::fromRequest($request)->getId())->toArray();
     }
 }
