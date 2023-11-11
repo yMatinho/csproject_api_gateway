@@ -2,20 +2,22 @@
 
 namespace App\Modules\User\DTO;
 
+use Framework\Request\Request;
+
 class User
 {
     public function __construct(
-        private int $id,
+        private ?int $id,
         private string $username,
         private string $email,
         private string $firstName,
         private string $lastName,
-        private string $createdAt,
+        private ?string $createdAt = null,
         private ?string $updatedAt = null,
     ) {
     }
 
-    public static function fromJson(object $data): User
+    public static function fromData(object $data): User
     {
         return new User(
             $data->id,
@@ -28,7 +30,12 @@ class User
         );
     }
 
-    public function getId(): int {
+    public static function fromRequest(Request $data): User
+    {
+        return self::fromData($data);
+    }
+
+    public function getId(): ?int {
         return $this->id;
     }
 
@@ -48,11 +55,23 @@ class User
         return $this->lastName;
     }
 
-    public function getCreatedAt(): string {
+    public function getCreatedAt(): ?string {
         return $this->createdAt;
     }
 
     public function getUpdatedAt(): ?string {
         return $this->updatedAt;
+    }
+
+    public function toArray(): array {
+        return [
+            "id"=> $this->getId(),
+            "username"=> $this->getUsername(),
+            "email"=> $this->getEmail(),
+            "firstName"=> $this->getFirstName(),
+            "lastName"=> $this->getLastName(),
+            "createdAt"=> $this->getCreatedAt(),
+            "updatedAt"=> $this->getUpdatedAt(),
+        ];
     }
 }
