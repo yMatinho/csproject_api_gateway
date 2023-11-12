@@ -13,6 +13,8 @@ use Framework\Singleton\Router\HttpDefaultHeaders;
 use Framework\Singleton\Router\HttpDefaultRouteNames;
 use Framework\Singleton\Router\Route;
 use Framework\Singleton\Router\Router;
+use Throwable;
+use TypeError;
 
 class ApiExecutionCommand extends ExecutionCommand
 {
@@ -63,6 +65,9 @@ class ApiExecutionCommand extends ExecutionCommand
         catch (Exception $e) {
             header(HttpDefaultHeaders::getHeader(HttpDefaultCodes::BAD_REQUEST));
             echo $this->treatedError($e, $controller);
+        } catch(Throwable $e) {
+            header(HttpDefaultHeaders::getHeader(HttpDefaultCodes::BAD_REQUEST));
+            echo $this->treatedError(new Exception("Unknown error"), $controller);
         }
     }
 
