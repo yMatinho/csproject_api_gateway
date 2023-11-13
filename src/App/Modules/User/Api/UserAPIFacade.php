@@ -8,11 +8,13 @@ use App\Modules\Auth\DTO\Response\ValidateResponse;
 use App\Modules\User\DTO\Request\UserCreationRequest;
 use App\Modules\User\DTO\Request\UserUpdateRequest;
 use App\Modules\User\DTO\Response\FindByCredentialsResponse;
+use App\Modules\User\DTO\Response\SendEmailVerificationResponse;
 use App\Modules\User\DTO\Response\UserCreationResponse;
 use App\Modules\User\DTO\Response\UserDeleteResponse;
 use App\Modules\User\DTO\Response\UserFindAllResponse;
 use App\Modules\User\DTO\Response\UserFindResponse;
 use App\Modules\User\DTO\Response\UserUpdateResponse;
+use App\Modules\User\DTO\Response\VerifyEmailResponse;
 use Framework\Http\HttpRequestFacade;
 use Framework\Singleton\Router\HttpMethods;
 
@@ -22,6 +24,24 @@ class UserAPIFacade
     public function __construct()
     {
         $this->httpRequestFacade = new HttpRequestFacade();
+    }
+
+    public function sendEmailVerification(string $email): SendEmailVerificationResponse
+    {
+        $response = $this->httpRequestFacade->request(HttpMethods::POST, USER_SERVICE_URL . "emailVerification/send", [
+            "email"=>$email
+        ]);
+
+        return SendEmailVerificationResponse::fromData($response);
+    }
+
+    public function verifyEmail(string $token): VerifyEmailResponse
+    {
+        $response = $this->httpRequestFacade->request(HttpMethods::PUT, USER_SERVICE_URL . "emailVerification/verify", [
+            "token"=>$token
+        ]);
+
+        return VerifyEmailResponse::fromData($response);
     }
 
     public function findByCredentials(string $login, string $password): FindByCredentialsResponse

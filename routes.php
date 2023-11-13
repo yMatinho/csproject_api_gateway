@@ -16,3 +16,14 @@ Router::get()->addGet("user", "App\\Modules\\User\\Controller\\UserController@fi
 Router::get()->addPost("user", "App\\Modules\\User\\Controller\\UserController@create", "user.create");
 Router::get()->addPut("user", "App\\Modules\\User\\Controller\\UserController@update", "user.update");
 Router::get()->addDelete("user", "App\\Modules\\User\\Controller\\UserController@delete", "user.delete");
+Router::get()->addPost(
+    "/emailVerification/send",
+    "App\Modules\User\Controller\EmailVerificationController@sendEmailVerification",
+    'emailVerification.send'
+);
+
+Router::get()->addPut(
+    "/emailVerification/verify",
+    "App\Modules\User\Controller\EmailVerificationController@verifyEmail",
+    'emailVerification.verify'
+);
