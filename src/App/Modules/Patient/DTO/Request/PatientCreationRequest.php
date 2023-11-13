@@ -18,12 +18,26 @@ class PatientCreationRequest
 
     public static function fromRequest(Request $data): PatientCreationRequest
     {
+        self::validateRequest($data);
+
         return new PatientCreationRequest(
             $data->name,
             $data->age,
             $data->height,
             $data->weight
         );
+    }
+
+    public static function validateRequest(Request $request): void
+    {
+        if (empty($request->getValues()["name"]))
+            throw new \Exception("Nome não pode ser vazio");
+        if (empty($request->getValues()["age"]) || !is_numeric($request->getValues()["age"]))
+            throw new \Exception("Idade não pode ser vazia");
+        if (empty($request->getValues()["height"]) || !is_numeric($request->getValues()["height"]))
+            throw new \Exception("Altura não pode ser vazia");
+        if (empty($request->getValues()["weight"]) || !is_numeric($request->getValues()["weight"]))
+            throw new \Exception("Peso não pode ser vazio");
     }
 
     public function getName(): string
