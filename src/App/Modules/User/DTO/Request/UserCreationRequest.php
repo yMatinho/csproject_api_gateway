@@ -19,6 +19,8 @@ class UserCreationRequest
 
     public static function fromRequest(Request $data): UserCreationRequest
     {
+        self::validateRequest($data);
+
         return new UserCreationRequest(
             $data->username,
             $data->password,
@@ -26,6 +28,20 @@ class UserCreationRequest
             $data->firstName,
             $data->lastName
         );
+    }
+
+    public static function validateRequest(Request $request): void
+    {
+        if (empty($request->getValues()["username"]))
+            throw new \Exception("Usuário não pode ser vazio");
+        if (empty($request->getValues()["password"]))
+            throw new \Exception("Senha não pode ser vazia");
+        if (empty($request->getValues()["email"]))
+            throw new \Exception("Email não pode ser vazio");
+        if (empty($request->getValues()["firstName"]))
+            throw new \Exception("Nome não pode ser vazio");
+        if (empty($request->getValues()["lastName"]))
+            throw new \Exception("Sobrenome não pode ser vazio");
     }
 
     public function getPassword(): string
@@ -53,13 +69,14 @@ class UserCreationRequest
         return $this->username;
     }
 
-    public function toRequest(): array {
+    public function toRequest(): array
+    {
         return [
-            "password"=> $this->password,
-            "firstName"=> $this->firstName,
-            "lastName"=> $this->lastName,
-            "username"=> $this->username,
-            "email"=> $this->email
+            "password" => $this->password,
+            "firstName" => $this->firstName,
+            "lastName" => $this->lastName,
+            "username" => $this->username,
+            "email" => $this->email
         ];
     }
 }

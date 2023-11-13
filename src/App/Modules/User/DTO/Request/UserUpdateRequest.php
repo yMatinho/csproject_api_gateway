@@ -10,9 +10,7 @@ class UserUpdateRequest
 
     public function __construct(
         private int $id,
-        private ?string $username,
         private ?string $password,
-        private ?string $email,
         private ?string $firstName,
         private ?string $lastName,
     ) {
@@ -20,14 +18,20 @@ class UserUpdateRequest
 
     public static function fromRequest(Request $data): UserUpdateRequest
     {
+        self::validateRequest($data);
+
         return new UserUpdateRequest(
             $data->id,
-            $data->username,
             $data->password,
-            $data->email,
             $data->firstName,
             $data->lastName
         );
+    }
+
+    public static function validateRequest(Request $request): void
+    {
+        if (empty($request->getValues()["id"]))
+            throw new \Exception("ID não pode ser vazio");
     }
 
     public function getId(): int
@@ -50,24 +54,13 @@ class UserUpdateRequest
         return $this->lastName;
     }
 
-    public function getEmail(): ?string
+    public function toRequest(): array
     {
-        return $this->email;
-    }
-
-    public function getUsername(): ?string
-    {
-        return $this->username;
-    }
-
-    public function toRequest(): array {
         return array_filter([
-            "password"=> $this->password,
-            "firstName"=> $this->firstName,
-            "lastName"=> $this->lastName,
-            "username"=> $this->username,
-            "email"=> $this->email
-        ], function($bodyItem) {
+            "password" => $this->password,
+            "firstName" => $this->firstName,
+            "lastName" => $this->lastName,
+        ], function ($bodyItem) {
             return $bodyItem !== null;
         });
     }
