@@ -28,6 +28,12 @@ class PatientUpdateRequest
         );
     }
 
+    public static function validateRequest(Request $request): void
+    {
+        if (empty($request->getValues()["id"]))
+            throw new \Exception("ID não pode ser vazio");
+    }
+
     public function getId(): int
     {
         return $this->id;
